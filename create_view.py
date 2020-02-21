@@ -30,10 +30,10 @@ db.command({"create": "Rate",
                     'cid': {'$first': '$cid'},
                     'name': {'$first': '$name'},
                     'faculty': {'$first': '$faculty'},
-                    'ratings': {'$sum': {'$sum': '$rate.ratings'}},
-                    'likes': {'$sum': {'$sum': '$rate.likes'}},
-                    'useful': {'$sum': {'$sum': '$rate.useful'}},
-                    'easy': {'$sum': {'$sum': '$rate.easy'}}
+                    'ratings': {'$first': {'$sum': '$rate.ratings'}},
+                    'likes': {'$first': {'$sum': '$rate.likes'}},
+                    'useful': {'$first': {'$sum': '$rate.useful'}},
+                    'easy': {'$first': {'$sum': '$rate.easy'}}
                 }},
 
             ]})

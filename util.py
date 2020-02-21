@@ -64,13 +64,4 @@ def args(*args_list, require=None):
     return args_decorator
 
 
-def dump_course(csv_filename):
-    field_name = ['cid', 'name', 'faculty', 'taughtBy']
-    course_list = []
-    with open(csv_filename) as f:
-        c_reader = csv.DictReader(f, field_name)
-        for c in c_reader:
-            c['taughtBy'] = c['taughtBy'].split(',')
-            course_list.append(c)
-    db = db_client[db_name]
-    db.Course.insert_many(course_list)
+

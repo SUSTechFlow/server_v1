@@ -1,5 +1,4 @@
 import smtplib
-from email import encoders
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
@@ -21,7 +20,7 @@ class EmailSender():
         msg['To'] = self._format_addr(to_addr)
         msg['Subject'] = Header('Sent by SUSTechFlow', 'utf-8').encode()
 
-        server = smtplib.SMTP(self.smtp_server, 25)
+        server = smtplib.SMTP(self.smtp_server, 80)
         server.set_debuglevel(1)
         server.login(self.from_addr, self.password)
         server.sendmail(self.from_addr, to_addr, msg.as_string())
