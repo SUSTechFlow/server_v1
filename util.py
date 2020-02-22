@@ -46,10 +46,13 @@ def args(*args_list, require=None):
                         self.parser.add_argument(arg[0], action='append')
                     else:
                         self.parser.add_argument(arg[0], type=arg[1])
-                    new_require.append(arg[0])
+                    if arg in require:
+                        new_require.append(arg[0])
                 else:
                     self.parser.add_argument(arg)
             for k, v in self.parser.parse_args().items():
+                if kwargs.get(k) is not None:
+                    continue
                 kwargs[k] = v
                 if k in new_require + require and v is None:
                     return jsonDict(False, f'缺少必须参数{k}，请不要伪造请求。')
