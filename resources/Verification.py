@@ -17,6 +17,12 @@ class Verification(Resource):
     @args(require=['email'])
     @email_verify
     def get(self, email):
+        """
+        Send EMail to certain user.
+        One user can only be send once per 30 min.
+        :param email: GET params or JSON data.
+        :return: Result.
+        """
         if (code_tuple := Verification.code.get(email, None)) is not None:
             if datetime.now() < code_tuple[1] + timedelta(minutes=30):
                 return jsonDict(False, '请30分钟后再试。')
@@ -32,6 +38,12 @@ class Verification(Resource):
     @args(require=['email', 'vcode'])
     @email_verify
     def post(self, email, vcode):
+        """
+        Verify whether a verify code is correct.
+        :param email: User's email. JSON data.
+        :param vcode: Verify code. JSON data.
+        :return:
+        """
         if (code_tuple := Verification.code.get(email, None)) is not None:
             if vcode == code_tuple[0] and datetime.now() < code_tuple[1] + timedelta(minutes=30):
                 return jsonDict(True, '验证成功')

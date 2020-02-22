@@ -7,21 +7,28 @@ from util import jsonDict, args, email_verify
 
 
 class User(Resource):
+    """
+    User registration and login.
+    """
     name = 'user'
-
-    def __init__(self):
-        self.name = ''
-        self.email = ''
-        self.permanent_token = ''
-        self.temp_token = ''
-        self.last_login = ''
 
     @auth_required
     def get(self, username):
+        """
+        Respond the username based on request Authentication.
+        :param username: Provided by *auth_required*, see its document.
+        :return: username.
+        """
         return jsonDict(True, msg='成功', username=username)
 
     @args(require=['username', 'password'])
     def post(self, username, password):
+        """
+        User login.
+        :param username: Username, JSON data.
+        :param password: Password, JSON data.
+        :return: Token and username. The token should be attached when request a *auth_required* API.
+        """
         db = db_client[db_name]
         if (res := db.User.find_one({'username': username})) is None:
             res = db.User.find_one({'email': username})
@@ -39,6 +46,13 @@ class User(Resource):
 
     @args(require=['username', 'password', 'new_password'])
     def patch(self, username, password, new_password):
+        """
+        Change user's password. NOT USED AND TESTED YET.
+        :param username:
+        :param password:
+        :param new_password:
+        :return:
+        """
         db = db_client[db_name]
         if (res := db.User.find_one({'username': username})) is None:
             res = db.User.find_one({'email': username})
@@ -59,6 +73,14 @@ class User(Resource):
     @args(require=['username', 'password', 'email', 'vcode'])
     @email_verify
     def put(self, username, password, email, vcode):
+        """
+        User registration.
+        :param username: JSON data.
+        :param password: JSON data.
+        :param email: JSON data.
+        :param vcode: Verify code JSON data.
+        :return: Token and username. The token should be attached when request a *auth_required* API.
+        """
         if not Verification.verify(email, vcode):
             return jsonDict(False, '验证码错误')
         permanent_token = Key.hashpw(password)

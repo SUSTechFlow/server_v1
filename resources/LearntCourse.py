@@ -11,6 +11,11 @@ class LearntCourse(Resource):
     @auth_required
     @args(require=['username'])
     def get(self, username):
+        """
+        Fetch a user's learnt course.
+        :param username: Provided by *auth_required*
+        :return: data: [cid] User's learnt course.
+        """
         db = db_client[db_name]
         user = db.User.find_one({'username': username})
         if user is not None:
@@ -21,6 +26,13 @@ class LearntCourse(Resource):
     @auth_required
     @args('cid', ('cids', list), require=['username'])
     def post(self, username, cids=None, cid=None):
+        """
+        Add learnt course(s) for certain user.
+        :param username: Provided by *auth_required*
+        :param cids: Bulker write to add user's learnt course, JSON list
+        :param cid: Insert one learnt course, JSON data.
+        :return:
+        """
         db = db_client[db_name]
         if cids is not None:
             db.User.update({'username': username}, {'$addToSet': {'learnt_course': {'$each': cids}}})
@@ -33,6 +45,13 @@ class LearntCourse(Resource):
     @auth_required
     @args('cid', ('cids', list), require=['username'])
     def delete(self, username, cids=None, cid=None):
+        """
+        Remove learnt course(s) for certain user.
+        :param username: Provided by *auth_required*
+        :param cids: Bulker remove user's learnt course, JSON list
+        :param cid: Remove one learnt course, JSON data.
+        :return:
+        """
         db = db_client[db_name]
         if cids is not None:
             db.User.update({'username': username}, {'$pull': {'learnt_course': {'$in': cids}}})

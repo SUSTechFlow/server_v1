@@ -1,2 +1,5 @@
 # Project exclude paths
 /venv/
+/data/
+/backend/ProductionEmailSender.py
+/crawler/
