@@ -7,6 +7,10 @@ from datetime import datetime, timedelta
 
 
 class Verification(Resource):
+    """
+    EMail verification.
+    Send verify code to user's EMail.
+    """
     name = 'verify'
     code = {}
 

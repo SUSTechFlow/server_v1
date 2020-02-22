@@ -11,7 +11,7 @@ class EmailSender():
 
     def __init__(self):
         self.from_addr = 'verification@sustechflow.top'
-        self.password = '7oQRIWrY2fjC'
+        self.password = '{{ I KNOW WHAT YOU ARE LOOKING FOR. }}'
         self.smtp_server = 'smtpdm.aliyun.com'
 
     def send_msg(self, msg, to_addr):
