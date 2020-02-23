@@ -1,17 +1,22 @@
 from flask_restful import Resource
+
+from backend.Session import auth_required
 from backend.mongo import *
-from util import args, jsonDict
+from util import jsonDict, args
 
 
-class Course(Resource):
-    name = 'course'
+class LearntCourseDetail(Resource):
+    name = 'learnt_course_detail'
 
-    @args(require=['cid'])
-    def get(self, **kwargs):
+    @auth_required
+    @args('username')
+    def get(self, username):
         db = db_client[db_name]
+        user = db.User.find_one({'username': username})
+        learn_course = user['learnt_course']
         course_info = db.Course.aggregate([
             {
-                '$match': kwargs
+                '$match': {'cid': {'$in': learn_course}}
             },
             {
                 '$lookup': {
@@ -81,4 +86,4 @@ class Course(Resource):
                 }
             },
         ])
-        return jsonDict(True, '', data=[c for c in course_info][0])
+        return jsonDict(True, '', data=[c for c in course_info])

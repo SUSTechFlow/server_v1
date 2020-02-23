@@ -1,17 +1,17 @@
 from flask_restful import Resource
-from backend.mongo import *
+from backend.mongo import db_client, db_name
 from util import args, jsonDict
 
 
-class Course(Resource):
-    name = 'course'
+class PluginPlan(Resource):
+    name = 'plugin_plan'
 
-    @args(require=['cid'])
-    def get(self, **kwargs):
+    @args(require=[('cids', list)])
+    def get(self, cids):
         db = db_client[db_name]
         course_info = db.Course.aggregate([
             {
-                '$match': kwargs
+                '$match': {'cid': {'$in': cids}}
             },
             {
                 '$lookup': {
@@ -81,4 +81,4 @@ class Course(Resource):
                 }
             },
         ])
-        return jsonDict(True, '', data=[c for c in course_info][0])
+        return jsonDict(True, '', data=[c for c in course_info])

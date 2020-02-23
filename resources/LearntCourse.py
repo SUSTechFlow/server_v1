@@ -40,7 +40,7 @@ class LearntCourse(Resource):
             db.User.update({'username': username}, {'$addToSet': {'learnt_course': cid}})
         if cid is None and cids is None:
             return jsonDict(False, '你至少需要提供一个参数，cid或者cids')
-        return jsonDict(True, '修改成功', data=True)
+        return jsonDict(True, '添加成功', data=True)
 
     @auth_required
     @args('cid', ('cids', list), require=['username'])
@@ -59,4 +59,4 @@ class LearntCourse(Resource):
             db.User.update({'username': username}, {'$pull': {'learnt_course': cid}})
         if cid is None and cids is None:
             return jsonDict(False, '你至少需要提供一个参数，cid或者cids')
-        return jsonDict(True, '修改成功', data=False)
+        return jsonDict(True, '删除成功', data=False)

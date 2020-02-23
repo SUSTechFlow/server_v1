@@ -10,7 +10,7 @@ class EmailSender():
         return formataddr((Header(name, 'utf-8').encode(), addr))
 
     def __init__(self):
-        self.from_addr = 'verification@sustechflow.top'
+        self.from_addr = 'verification@auto.sustechflow.top'
         self.password = '{{ I KNOW WHAT YOU ARE LOOKING FOR. }}'
         self.smtp_server = 'smtpdm.aliyun.com'
 
