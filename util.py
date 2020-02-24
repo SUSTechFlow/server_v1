@@ -38,9 +38,9 @@ def email_verify(func):
     :return: Result of func
     """
     def decorated_fun(self, *args, **kwargs):
-        pattern = '''[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(mail\.sustech\.edu\.cn)|(mail\.sustc\.edu\.cn)|(sustech\.edu\.cn)|(sustc\.edu\.cn)'''
+        pattern = r'''[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@((mail\.sustech\.edu\.cn)|(sustech\.edu\.cn))'''
         if re.match(pattern, kwargs['email']) is None:
-            return jsonDict('False', '邮箱格式错误')
+            return jsonDict(False, '邮箱格式错误')
         return func(self, *args, **kwargs)
 
     return decorated_fun

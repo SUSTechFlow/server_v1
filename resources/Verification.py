@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 def _email_to_sid(e):
-    return e.replace('@sustech.edu.cn', '').replace('mail.sustech.edu.cn', '')
+    return e.replace('@sustech.edu.cn', '').replace('@mail.sustech.edu.cn', '')
 
 
 class Verification(Resource):
