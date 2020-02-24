@@ -2,6 +2,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
+from email.mime.multipart import MIMEMultipart
 
 
 class EmailSender():
@@ -14,8 +15,9 @@ class EmailSender():
         self.password = '{{ I KNOW WHAT YOU ARE LOOKING FOR. }}'
         self.smtp_server = 'smtpdm.aliyun.com'
 
-    def send_msg(self, msg, to_addr):
-        msg = MIMEText(msg, 'html', 'utf-8')
+    def send_msg(self, msg_text, to_addr):
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(msg_text, 'plain', 'utf-8'))
         msg['From'] = self._format_addr(f'SUSTechFlow: {self.from_addr}')
         msg['To'] = self._format_addr(to_addr)
         msg['Subject'] = Header('Sent by SUSTechFlow', 'utf-8').encode()
