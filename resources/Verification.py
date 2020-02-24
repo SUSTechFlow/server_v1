@@ -6,6 +6,10 @@ import random
 from datetime import datetime, timedelta
 
 
+def _email_to_sid(e):
+    return e.replace('@sustech.edu.cn', '').replace('mail.sustech.edu.cn', '')
+
+
 class Verification(Resource):
     """
     EMail verification.
@@ -23,6 +27,8 @@ class Verification(Resource):
         :param email: GET params or JSON data.
         :return: Result.
         """
+        if not _email_to_sid(email).isdigit():
+            return jsonDict(False, '老师的邮箱注册暂未开放（防止对老师形成骚扰），请手动联系我们进行注册。')
         if (code_tuple := Verification.code.get(email, None)) is not None:
             if datetime.now() < code_tuple[1] + timedelta(minutes=1):
                 return jsonDict(False, '请1分钟后再试。')
