@@ -4,6 +4,8 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 from email.mime.multipart import MIMEMultipart
 
+from backend.Secret import EMailPassword
+
 
 class EmailSender():
     def _format_addr(self, s):
@@ -12,7 +14,7 @@ class EmailSender():
 
     def __init__(self):
         self.from_addr = 'verification@auto.sustechflow.top'
-        self.password = '{{ I KNOW WHAT YOU ARE LOOKING FOR. }}'
+        self.password = EMailPassword
         self.smtp_server = 'smtpdm.aliyun.com'
 
     def send_msg(self, msg_text, to_addr):
