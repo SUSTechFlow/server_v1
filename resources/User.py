@@ -94,6 +94,7 @@ class User(Resource):
             "username": username,
             "email": email,
             "permanent_token": permanent_token,
+            'learnt_course': []
         })
         if not ins_res.acknowledged:
             return jsonDict(False, '无法与数据库通信')

@@ -7,7 +7,7 @@ class PluginPlan(Resource):
     name = 'plugin_plan'
 
     @args(require=[('cids', list)])
-    def get(self, cids):
+    def post(self, cids):
         db = db_client[db_name]
         course_info = db.Course.aggregate([
             {

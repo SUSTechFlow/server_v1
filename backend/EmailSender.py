@@ -15,7 +15,7 @@ class EmailSender():
         self.smtp_server = 'smtpdm.aliyun.com'
 
     def send_msg(self, msg, to_addr):
-        msg = MIMEText(msg, 'plain', 'utf-8')
+        msg = MIMEText(msg, 'html', 'utf-8')
         msg['From'] = self._format_addr(f'SUSTechFlow: {self.from_addr}')
         msg['To'] = self._format_addr(to_addr)
         msg['Subject'] = Header('Sent by SUSTechFlow', 'utf-8').encode()
