@@ -21,7 +21,7 @@ class Comment(Resource):
     name = 'comment'
 
     @auth_required
-    @args('gpa', require=['cid', 'content', 'commentBy', 'term', ('willing',bool), ('anonymous', bool), ('rate', dict), ('taught', list)])
+    @args('gpa', require=['cid', 'content', 'term', ('willing',bool), ('anonymous', bool), ('rate', dict), ('taught', list)])
     def put(self, **kwargs):
         rate_tuple = rate_verify(kwargs['rate'])
         if rate_tuple['success']:
@@ -30,6 +30,8 @@ class Comment(Resource):
             kwargs['year'] = datetime.now().year
             kwargs['month'] = datetime.now().month
             kwargs['day'] = datetime.now().day
+            kwargs['commentBy'] = kwargs['username']
+            del kwargs['username']
             db = db_client[db_name]
             db.Comment.find_one_and_replace({'cid': kwargs['cid'], 'commentBy': kwargs['commentBy']}, kwargs, upsert=True)
             return jsonDict(True, '评论成功！')
