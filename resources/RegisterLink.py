@@ -36,7 +36,7 @@ class RegisterLink(Resource):
         try:
             email_sender = EmailSender()
             # TODO Remove the following comment mark in production.
-            email_sender.send_msg(f'您的SUSTechFlow注册链接是：https://sustechflow.top/register/?vcode={vcode}', email)
+            email_sender.send_msg(f'您的SUSTechFlow注册链接是：https://sustechflow.top/register?vcode={vcode}', email)
             return jsonDict(True, '发送成功')
         except:
             return jsonDict(False, 'Email发送失败')
