@@ -2,6 +2,7 @@ from resources.Key import Key
 from backend.Session import session, auth_required
 from flask_restful import Resource
 from backend.mongo import db_client, db_name
+from resources.RegisterLink import RegisterLink
 from resources.Verification import Verification
 from util import jsonDict, args, email_verify
 
@@ -82,7 +83,8 @@ class User(Resource):
         :return: Token and username. The token should be attached when request a *auth_required* API.
         """
         if not Verification.verify(email, vcode):
-            return jsonDict(False, '验证码错误')
+            if not RegisterLink.verify(email, vcode):
+                return jsonDict(False, '验证码错误')
         permanent_token = Key.hashpw(password)
         temp_token = session.sign_jwt_token(username)
         db = db_client[db_name]

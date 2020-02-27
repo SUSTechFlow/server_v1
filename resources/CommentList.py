@@ -13,8 +13,8 @@ class CommentList(Resource):
         for c in comments:
             if c['anonymous']:
                 c['commentBy'] = '佚名'
-                c['username'] = '身体好轻，这样的体验从未有过，已经没有什么好害怕的了，因为！我不再是一个人了！'
+                c['username'] = 'flag{身体好轻，这样的体验从未有过，已经没有什么好害怕的了，因为！我不再是一个人了！}'
             if not c['willing']:
-                c['gpa'] = '奇迹和魔法都是存在的。'
+                c['gpa'] = 'flag{奇迹和魔法都是存在的。}'
         comments = list(filter(lambda a: a['content'] != '', comments))
         return jsonDict(True, '', data=comments)

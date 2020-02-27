@@ -16,6 +16,7 @@ from resources.LearntCourse import LearntCourse
 from resources.LearntCourseDetail import LearntCourseDetail
 from resources.Major import Major
 from resources.PluginPlan import PluginPlan
+from resources.RegisterLink import RegisterLink
 
 app = Flask(__name__)
 app.config['WTF_CSRF_CHECK_DEFAULT'] = False
@@ -23,7 +24,7 @@ CORS(app)
 Compress(app)
 api = Api(app)
 resource_list = [Key, User, Rate, Verification, Course, Comment, Plan, CommentList, CommentStatistic, LearntCourse,
-                 LearntCourseDetail, Major, PluginPlan]
+                 LearntCourseDetail, Major, PluginPlan, RegisterLink]
 for resource in resource_list:
     api.add_resource(resource, f'/{resource.name}')
 if __name__ == '__main__':
